@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-const config = {
+const config: Config = withUt({
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -14,16 +15,23 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1000px",
+        "2xl": "1900px",
       },
     },
     extend: {
+      boxShadow: {
+        "3xl": "4px 5px 4px 5px  #000",
+        "4xl": "0px 4px 4px #000",
+      },
+
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        customBrown: "#141414",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -75,6 +83,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+}) satisfies Config;
 
 export default config;

@@ -9,16 +9,96 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// This is your updated Prisma schema file
 
-model User{
-  id String @id @default(auto() ) @map("_id") @db.ObjectId
-  username String
-  externalUserId String @unique
-  email String? @unique
-  avatar String?
+model User {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  username       String         @unique
+  externalUserId String         @unique
+  email          String?        @unique
+  avatar         String?
 
+  posts          Post[]
+  comments       Comment[]
+  messages       Message[]
+  conversationIds String[]      @db.ObjectId
+  conversations  Conversation[] @relation(fields: [conversationIds], references: [id])
+
+  following     Follow[] @relation("Following")
+  followedBy    Follow[] @relation("FollowedBy")
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Post {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  files       String[]
+
+  authorId    String    @db.ObjectId
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  comments    Comment[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Follow {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  followerId  String    @db.ObjectId
+  followingId String    @db.ObjectId
+
+  follower    User      @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User      @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Comment {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  comment     String
+
+  postId      String    @db.ObjectId
+  post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  authorId    String    @db.ObjectId
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Conversation {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+
+  name        String?
+  isGroup     Boolean?
   
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userIds     String[]     @db.ObjectId
+  users       User[]       @relation(fields: [userIds], references: [id])
 
+  messagesIds String[]     @db.ObjectId
+  messages    Message[]
+
+  createdAt   DateTime     @default(now())
+  lastMessageAt DateTime   @default(now())
+}
+
+model Message {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  message        String?
+  file           String?
+
+  conversationId String      @db.ObjectId
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String      @db.ObjectId
+  sender         User        @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime    @default(now())
 }

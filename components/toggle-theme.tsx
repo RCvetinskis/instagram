@@ -11,10 +11,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export function ThemeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
+  const dropDownStyle =
+    theme === "light" ? "bg-white shadow-black" : " bg-black shadow-gray-700";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,23 +29,23 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className=" rounded-xl  bg-gray-300 text-black  shadow-inner shadow-black border-none "
+        className={cn("shadow-3xl border-none   rounded ", dropDownStyle)}
         side="right"
       >
         <DropdownMenuItem
-          className="cursor-pointer hover:bg-blue-400 rounded-xl transition"
+          className="cursor-pointer  transition"
           onClick={() => setTheme("light")}
         >
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer hover:bg-blue-400 rounded-xl transition"
+          className="cursor-pointertransition"
           onClick={() => setTheme("dark")}
         >
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer hover:bg-blue-400 rounded-xl transition"
+          className="cursor-pointer transition"
           onClick={() => setTheme("system")}
         >
           System

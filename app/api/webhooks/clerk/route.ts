@@ -2,7 +2,16 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import db from "@/lib/db";
+import { revalidatePath } from "next/cache";
+
+let lastProcessedTimestamp = 0;
+const cooldownPeriod = 5000;
+
 export async function POST(req: Request) {
+  const currentTimestamp = Date.now();
+  if (currentTimestamp - lastProcessedTimestamp < cooldownPeriod) {
+    return new Response("Rate limit exceeded", { status: 429 });
+  }
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -61,6 +70,8 @@ export async function POST(req: Request) {
         email: payload.data?.email_addresses[0]?.email_address,
       },
     });
+    revalidatePath("/");
+    revalidatePath(`/user/${payload.data?.username}`);
   }
 
   if (eventType === "user.updated") {
