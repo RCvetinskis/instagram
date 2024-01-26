@@ -1,6 +1,8 @@
 "use server";
 import db from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 import { getCurrentUser } from "@/lib/user-service";
+
 export const getUsersQuery = async (value: string) => {
   try {
     const currentUser = await getCurrentUser();
@@ -42,6 +44,56 @@ export const getUsersQuery = async (value: string) => {
     return sortedUsers;
   } catch (error) {
     console.log("ERROR_GET_USER_QUERY", error);
+    throw error;
+  }
+};
+
+export const setUserOnline = async () => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const updatedUser = await db.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        online: true,
+      },
+    });
+
+    pusherServer.trigger(
+      `users-channel-${currentUser.id}`,
+      "user:status",
+      updatedUser
+    );
+  } catch (error) {
+    console.error("ERROR_USERS_ACTION, setUserOnline", error);
+    throw error;
+  }
+};
+export const setUserOffline = async () => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const updatedUser = await db.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        online: false,
+      },
+    });
+    if (!updatedUser) throw new Error("Failed to update online status");
+
+    pusherServer.trigger(
+      `users-channel-${currentUser.id}`,
+      "user:status",
+      updatedUser
+    );
+  } catch (error) {
+    console.error("ERROR_USERS_ACTION, setUserOffline", error);
     throw error;
   }
 };

@@ -8,7 +8,10 @@ const HomePage = async () => {
 
   return (
     <main>
-      <Posts posts={allPosts} noPostsText="Follow someone to see posts" />
+      <Posts
+        initialPosts={allPosts}
+        noPostsText="Follow someone to see posts"
+      />
 
       <LoadMore variant="home" />
     </main>

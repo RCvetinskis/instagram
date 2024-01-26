@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ModalSuggestedUsers } from "@/components/modals/modal-suggested-users";
 export const DesktopRightSidebar = async () => {
   const suggestedUsers = await getSuggestedUsers();
   const currentUser = await getCurrentUser();
@@ -29,12 +30,15 @@ export const DesktopRightSidebar = async () => {
         <UserCurrentLabel />
         <div className="flex items-center justify-around w-full">
           <h2 className="text-gray-500">Suggested for you</h2>
-          <Button variant={"link"}>See All</Button>
+          <ModalSuggestedUsers suggestedUsers={suggestedUsers}>
+            <Button variant={"link"}>See All</Button>
+          </ModalSuggestedUsers>
         </div>
         <Separator className="my-1" />
+
         <div className="overflow-y-auto w-full h-full">
           {routes.length === 0 && <p>No new users</p>}
-          {routes.map((item) => (
+          {routes.slice(0, 10).map((item) => (
             <NavItemForyou
               key={item.user.id}
               href={item.href}

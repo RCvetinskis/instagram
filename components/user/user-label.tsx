@@ -14,7 +14,7 @@ export const UserLabel = ({ user, href, side, align }: UserLabelProps) => {
     <HoverUser asChild side={side} align={align} user={user}>
       <Link href={href}>
         <div className="flex gap-x-3 items-center cursor-pointer  hover:text-gray-400 ">
-          <UserAvatar avatar={user.avatar} />
+          <UserAvatar initialUser={user} />
 
           <div className="text-sm capitalize">
             <p>{user.username}</p>

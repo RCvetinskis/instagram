@@ -14,15 +14,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { UserCommentsExtentedPost } from "@/types";
 import { ModalShowPost } from "@/components/modals/modal-show-post";
 import useCommentsLength from "@/hooks/useCommentsLength";
+import { ModalDeletePost } from "@/components/modals/modal-delete-post";
+import useIsAuthor from "@/hooks/useIsAuthor";
 
 interface PostCardProps {
   post: UserCommentsExtentedPost;
 }
 export const PostCard = ({ post }: PostCardProps) => {
   const commentsLength = useCommentsLength(post.id, post.comments.length);
+
+  const isAuthor = useIsAuthor(post.id);
   return (
     <Card className="p-1 border-none w-full lg:w-[500px] xl:w-[700px] rounded shadow-3xl py-4 shadow-black ">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <span className="flex items-center gap-3 ">
           <UserLabel
             user={post.author}
@@ -33,6 +37,7 @@ export const PostCard = ({ post }: PostCardProps) => {
 
           <TimeAgo createdAt={post.createdAt} />
         </span>
+        {isAuthor && <ModalDeletePost postId={post.id} />}
       </CardHeader>
 
       <CardContent>
@@ -57,11 +62,12 @@ export const PostCard = ({ post }: PostCardProps) => {
 export const PostCardSkeleton = () => {
   return (
     <div className="p-1 border-none w-full lg:w-[500px] xl:w-[700px] rounded shadow-3xl py-4 shadow-black ">
-      <header>
+      <header className="flex flex-row items-center justify-between">
         <span className="flex items-center gap-3">
           <UserAvatarSkeleton />
           <TimeAgoSkeleton />
         </span>
+        <Skeleton className="bg-gray-500 rounded-full w-[20px] h-[20px]" />
       </header>
       <section>
         <SliderSkeleton />

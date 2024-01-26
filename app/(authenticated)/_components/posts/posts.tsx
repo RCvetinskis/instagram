@@ -1,11 +1,44 @@
+"use client";
+import { useEffect, useState } from "react";
 import { PostCard, PostCardSkeleton } from "./post-card";
 import { UserCommentsExtentedPost } from "@/types";
+import { pusherClient } from "@/lib/pusher";
+import { find } from "lodash";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 interface PostsProps {
-  posts: UserCommentsExtentedPost[];
+  initialPosts: UserCommentsExtentedPost[];
+
   noPostsText?: string;
 }
-export const Posts = ({ posts, noPostsText }: PostsProps) => {
+export const Posts = ({
+  initialPosts,
+
+  noPostsText,
+}: PostsProps) => {
+  const [posts, setPosts] = useState(initialPosts);
+  const currentUser = useCurrentUser();
+
+  useEffect(() => {
+    if (currentUser) {
+      pusherClient.subscribe(currentUser.id);
+
+      const newPostHandler = (post: UserCommentsExtentedPost) => {
+        setPosts((current) => {
+          if (find(current, { id: post.id })) return current;
+
+          return [post, ...current];
+        });
+      };
+      pusherClient.bind("post:new", newPostHandler);
+
+      return () => {
+        pusherClient.unsubscribe(currentUser.id);
+        pusherClient.unbind("post:new", newPostHandler);
+      };
+    }
+  }, [currentUser]);
+
   if (!posts || posts.length === 0) {
     return <h1 className="text-3xl text-center">{noPostsText}</h1>;
   }

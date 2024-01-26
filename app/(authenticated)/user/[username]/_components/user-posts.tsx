@@ -23,7 +23,9 @@ export const UserPosts = ({ posts }: UserPostsProps) => {
 export const UserPostsSkeleton = () => {
   return (
     <div className="flex flex-wrap gap-3 items-center justify-center w-full rounded ">
-      <UserPostCardSkeleton />
+      {[...Array(3)].map((_, i) => (
+        <UserPostCardSkeleton key={i} />
+      ))}
     </div>
   );
 };

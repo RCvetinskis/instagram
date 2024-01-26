@@ -1,14 +1,12 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { UserPageSkeleton } from "./page";
 
 const UserPageLayout = ({ children }: { children: React.ReactNode }) => {
-  const { userId } = auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
-  return <div>{children}</div>;
+  return (
+    <div>
+      <Suspense fallback={<UserPageSkeleton />}>{children}</Suspense>
+    </div>
+  );
 };
 
 export default UserPageLayout;

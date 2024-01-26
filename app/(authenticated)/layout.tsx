@@ -1,14 +1,9 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { setUserOnline } from "@/actions/user-actions";
 import { DesktopSidebar } from "./_components/navigation/desktop-sidebar";
 import { MobileFooter } from "./_components/navigation/mobile-fooder";
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const { userId } = auth();
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
+const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+  await setUserOnline();
   return (
     <div className="flex h-full">
       {/* Left Sidebar */}

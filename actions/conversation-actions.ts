@@ -128,3 +128,90 @@ export const onCreateConversation = async (props: CreateConversationType) => {
     throw error;
   }
 };
+
+export const onConversationDelete = async (conversationId: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const currentConversation = await db.conversation.findUnique({
+      where: {
+        id: conversationId,
+      },
+      include: {
+        users: true,
+      },
+    });
+    if (!currentConversation) throw new Error("Conversation not found");
+
+    const deletedConversation = await db.conversation.delete({
+      where: {
+        id: currentConversation.id,
+      },
+    });
+    revalidatePath(`/user${currentUser.username}/conversations`);
+    revalidatePath(
+      `/user${currentUser.username}/conversations/${deletedConversation.id}`
+    );
+
+    currentConversation.users.forEach((user) => {
+      if (user.email) {
+        pusherServer.trigger(user.username, "conversation:delete", {
+          conversation: currentConversation,
+        });
+      }
+    });
+
+    return deletedConversation;
+  } catch (error) {
+    console.log("ERROR_ACTIONS_CONVERSATION, onConversationLeave", error);
+    throw error;
+  }
+};
+
+export const onUpdateConversationName = async (
+  conversationId: string,
+  conversationName: string
+) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const currentConversation = await db.conversation.findUnique({
+      where: {
+        id: conversationId,
+      },
+      include: {
+        users: true,
+      },
+    });
+    if (!currentConversation) throw new Error("Conversation not found");
+
+    const updatedConversation = await db.conversation.update({
+      where: {
+        id: currentConversation.id,
+        isGroup: true,
+      },
+      data: {
+        name: conversationName,
+      },
+    });
+    revalidatePath(`/user${currentUser.username}/conversations`);
+    revalidatePath(
+      `/user${currentUser.username}/conversations/${updatedConversation.id}`
+    );
+
+    currentConversation.users.forEach((user) => {
+      if (user.email) {
+        pusherServer.trigger(user.username, "conversation:update", {
+          conversation: currentConversation,
+        });
+      }
+    });
+
+    return updatedConversation;
+  } catch (error) {
+    console.log("ERROR_ACTIONS_CONVERSATION, onConversationLeave", error);
+    throw error;
+  }
+};

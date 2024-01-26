@@ -14,10 +14,10 @@ import {
 
 import { PostInfo } from "@/app/(authenticated)/_components/posts/post-info";
 import { Slider } from "../slider";
-
 import { UserCommentsExtentedPost } from "@/types";
 import { X } from "lucide-react";
 import { useTheme } from "next-themes";
+
 interface ModalShowPostProps {
   post: UserCommentsExtentedPost;
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export const ModalShowPost = ({ post, children }: ModalShowPostProps) => {
   const { theme } = useTheme();
 
   const dialogContentStyle =
-    theme === "light" ? "bg-white" : " bg-customBrown shadow-stone-900";
+    theme === "light" ? "bg-white" : " bg-customBrown ";
 
   if (isDesktop) {
     return (

@@ -1,18 +1,31 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+
+import userUserOnlineStatuts from "@/hooks/useUserOnlineStatus";
+import { User } from "@prisma/client";
 
 interface UserAvatarProps {
-  avatar: any;
+  initialUser: User;
   className?: string;
 }
 
-export const UserAvatar = ({ avatar, className }: UserAvatarProps) => {
+export const UserAvatar = ({ initialUser, className }: UserAvatarProps) => {
+  const user = userUserOnlineStatuts(initialUser);
+
   return (
-    <Avatar className={cn("h-8 w-8", className)}>
-      <AvatarImage src={avatar ? avatar : "./insta_user_avatar.png"} />
-      <AvatarFallback>User</AvatarFallback>
-    </Avatar>
+    <div className="relative">
+      <Avatar className={cn("h-8 w-8", className)}>
+        <AvatarImage
+          src={user.avatar ? user.avatar : "./insta_user_avatar.png"}
+        />
+        <AvatarFallback>User</AvatarFallback>
+      </Avatar>
+
+      <Badge variant={user.online ? "online" : "offline"} />
+    </div>
   );
 };
 

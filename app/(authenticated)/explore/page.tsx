@@ -9,7 +9,7 @@ const ExplorePage = async () => {
   return (
     <main>
       <Posts
-        posts={allPosts}
+        initialPosts={allPosts}
         noPostsText="No new posts from unfollowed users"
       />
 

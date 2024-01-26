@@ -52,13 +52,23 @@ export const ConversationsContainer = ({
       );
     };
 
+    const deleteHandler = (conversation: UserConversationMessageProps) => {
+      setConversations((current) =>
+        current.filter(
+          (currentConversation) => currentConversation.id !== conversation.id
+        )
+      );
+    };
+
     pusherClient.bind("conversation:new", newHandler);
     pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:delete", deleteHandler);
 
     return () => {
       pusherClient.unsubscribe(currentUsername);
       pusherClient.unbind("conversation:new", newHandler);
       pusherClient.unbind("conversation:update", updateHandler);
+      pusherClient.unbind("conversation:delete", deleteHandler);
     };
   }, [currentUsername, initialConversations, conversationId]);
 

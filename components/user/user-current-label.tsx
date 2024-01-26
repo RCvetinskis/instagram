@@ -5,12 +5,13 @@ import { UserAvatar, UserAvatarSkeleton } from "./user-avatar";
 
 export const UserCurrentLabel = async () => {
   const currentUser = await getCurrentUser();
+
   return (
     <Link
       href={`/user/${currentUser?.username}`}
       className="flex  gap-x-3 p-3 hover:shadow-2xl rounded  "
     >
-      <UserAvatar avatar={currentUser?.avatar} />
+      <UserAvatar initialUser={currentUser!} />
 
       <div className="text-sm capitalize">
         <p>{currentUser?.username}</p>

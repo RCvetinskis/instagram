@@ -1,10 +1,11 @@
 "use client";
+import { ModalConversationSettings } from "@/components/modals/chat/modal-conversation-settings";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UserAvatar, UserAvatarSkeleton } from "@/components/user/user-avatar";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { UserConversationProps } from "@/types";
-import { ArrowLeft, MoreHorizontal } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -20,6 +21,7 @@ export const ConversationHeader = ({
   const otherUser = useMemo(
     () =>
       conversation.users.filter((user) => user.username !== currentUsername),
+
     [conversation.userIds]
   );
 
@@ -48,7 +50,7 @@ export const ConversationHeader = ({
             <div className="flex flex-wrap  space-x-4 w-[80px]">
               {groupUsers.map((user) => (
                 <Link key={user.id} href={`/user/${user.username}`}>
-                  <UserAvatar avatar={user.avatar} />
+                  <UserAvatar initialUser={user} />
                 </Link>
               ))}
             </div>
@@ -63,21 +65,22 @@ export const ConversationHeader = ({
         {!conversation.isGroup && (
           <div className="flex  items-center gap-2 ">
             <Link href={`/user/${otherUser[0].username}`}>
-              <UserAvatar avatar={otherUser[0].avatar} />
+              <UserAvatar initialUser={otherUser[0]} />
             </Link>
 
             <div>
               <p className="capitalize">{otherUser[0].username}</p>
               <p className="text-foreground text-gray-500 group-hover:text-black text-sm truncate">
-                {/* TODO: show active users */}
                 Active
               </p>
             </div>
           </div>
         )}
-        {/* TODO:create delete conversation if not group, if group leave conversation,change group name */}
 
-        <MoreHorizontal />
+        <ModalConversationSettings
+          conversation={conversation}
+          otherUser={otherUser[0]}
+        />
       </div>
     </header>
   );

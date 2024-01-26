@@ -61,7 +61,7 @@ export const ConversationPreview = ({
     <div
       onClick={handleClick}
       className={cn(
-        "my-4 p-2 group rounded-xl cursor-pointer shadow-4xl ",
+        "my-4 p-2  rounded-xl shadow-4xl group  cursor-pointer ",
         !themeLight && "shadow-gray-700",
         hoverStyle,
         selectedStyle
@@ -71,7 +71,7 @@ export const ConversationPreview = ({
         <div className="flex  items-center gap-2 ">
           <div className="flex flex-wrap  space-x-4 w-[80px]">
             {groupUsers.map((user) => (
-              <UserAvatar key={user.id} avatar={user.avatar} />
+              <UserAvatar key={user.id} initialUser={user} />
             ))}
           </div>
           <div>
@@ -85,7 +85,7 @@ export const ConversationPreview = ({
 
       {!conversation.isGroup && (
         <div className="flex  items-center gap-2 ">
-          <UserAvatar avatar={otherUser[0].avatar} />
+          <UserAvatar initialUser={otherUser[0]} />
           <div>
             <p className="capitalize">{otherUser[0].username}</p>
             <p className="text-foreground text-gray-500 text-sm truncate">
@@ -100,7 +100,7 @@ export const ConversationPreview = ({
 
 export const ConversationPreviewSkeleton = () => {
   return (
-    <div className="my-4 p-2 group rounded-xl cursor-pointer shadow-4xl  ">
+    <div className="my-4 p-2  rounded-xl  shadow-4xl  ">
       <div className="flex  items-center gap-2 ">
         <UserAvatarSkeleton />
 

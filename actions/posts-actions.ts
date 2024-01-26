@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/user-service";
 import { utapi } from "@/lib/uploadthing";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
+import { pusherServer } from "@/lib/pusher";
 
 export const onCreatePost = async (formData: FormData) => {
   try {
@@ -31,9 +32,23 @@ export const onCreatePost = async (formData: FormData) => {
         files: uploadedFile.map((file) => file.data?.url) as string[],
         authorId: currentUser.id,
       },
+      include: {
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
+      },
     });
 
+    // TODO: podasct new post to all connected users
+    await pusherServer.trigger(currentUser.id, "post:new", newPost);
+
     revalidatePath("/");
+    revalidatePath("/explore");
+    revalidatePath(`/user/${currentUser.username}`);
+
     return newPost;
   } catch (error) {
     console.log("ERROR_ACTION CREATE_POST");
@@ -183,4 +198,47 @@ export const getUserFirstPosts = async (authorId: string) => {
     posts,
     totalPostsCount,
   };
+};
+
+export const getIsUserAuthor = async (postId: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const currentPost = await db.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+    if (currentPost?.authorId === currentUser.id) return true;
+    return false;
+  } catch (error) {
+    console.log("ERROR_ACTIONS_POSTS_ISUSERAUTHOR");
+    throw error;
+  }
+};
+
+export const onDeletePost = async (postId: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("Unauthorized");
+
+    const deletedPost = await db.post.delete({
+      where: {
+        id: postId,
+        authorId: currentUser.id,
+      },
+    });
+    if (!deletedPost)
+      throw new Error("You are not allowed to delete this post");
+
+    revalidatePath("/");
+    revalidatePath("/explore");
+    revalidatePath(`/user/${currentUser.username}`);
+
+    return deletedPost;
+  } catch (error) {
+    console.log("ERROR_ACTIONS_POST_POST_DELETE", error);
+    throw error;
+  }
 };

@@ -6,9 +6,6 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-// TODO: display suggested users 15, Suggest button see all displays all users in modal
-// TODO: create delete post button and functionality
-
 const font = Inconsolata({
   weight: ["500", "700", "900"],
   subsets: ["latin"],
@@ -26,6 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
+      signUpUrl="/sign-up"
+      signInUrl="/sign-in"
       appearance={{
         baseTheme: neobrutalism,
         variables: { colorPrimary: "blue", spacingUnit: "0.8rem" },

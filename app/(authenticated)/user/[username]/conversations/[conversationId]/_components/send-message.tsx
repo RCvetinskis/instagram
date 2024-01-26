@@ -51,7 +51,6 @@ export const SendMessage = ({
 
     startTransition(() => {
       onSendMessage(formData)
-        .then((res) => console.log(res))
         .catch((error) => {
           toast.error(error.message);
           resetForm();

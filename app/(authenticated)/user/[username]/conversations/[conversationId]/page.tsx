@@ -1,5 +1,4 @@
 import { getConversationById } from "@/lib/conversation-service";
-import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/user-service";
 import {
   ConversationHeader,
@@ -8,6 +7,7 @@ import {
 import { Messages, MessagesSkeleton } from "./_components/messages";
 import { SendMessage, SendMessageSkeleton } from "./_components/send-message";
 import { getMessages } from "@/lib/message-service";
+import { redirect } from "next/navigation";
 
 type paramsType = { username: string; conversationId: string };
 
@@ -18,8 +18,12 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
   const conversation = await getConversationById(params?.conversationId);
   const currentUser = await getCurrentUser();
   const messages = await getMessages(params?.conversationId);
-  if (!conversation || !currentUser) {
-    redirect("/");
+
+  if (!currentUser) {
+    return <ConversationPageSkeleton />;
+  }
+  if (!conversation) {
+    redirect(`/user/${currentUser.username}/conversations`);
   }
 
   return (

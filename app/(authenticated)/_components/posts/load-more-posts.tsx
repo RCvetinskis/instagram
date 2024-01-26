@@ -44,7 +44,7 @@ export const LoadMore = ({ variant }: LoadMoreProps) => {
 
   return (
     <>
-      <Posts posts={data} noPostsText="" />
+      <Posts initialPosts={data} noPostsText="" />
       {hasMoreData && (
         <div ref={ref} className="flex justify-center items-center p-1 w-full">
           <Spinner />

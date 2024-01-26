@@ -3,7 +3,8 @@ import { Header, HeaderSkeleton } from "./_components/header";
 import { getUserPosts } from "@/actions/posts-actions";
 import { Separator } from "@/components/ui/separator";
 import { UserPosts, UserPostsSkeleton } from "./_components/user-posts";
-import { Suspense } from "react";
+
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface UserPageProps {
   username: string;
@@ -14,16 +15,23 @@ const UserPage = async ({ params }: { params: UserPageProps }) => {
 
   return (
     <main>
-      <Suspense fallback={<HeaderSkeleton />}>
-        <Header user={user} postsLength={posts.length} />
-      </Suspense>
+      <Header user={user} postsLength={posts.length} />
 
       <Separator className="my-5" />
-      <Suspense fallback={<UserPostsSkeleton />}>
-        <UserPosts posts={posts} />
-      </Suspense>
+
+      <UserPosts posts={posts} />
     </main>
   );
 };
 
 export default UserPage;
+
+export const UserPageSkeleton = () => {
+  return (
+    <main>
+      <HeaderSkeleton />
+      <Skeleton className="my-5" />
+      <UserPostsSkeleton />
+    </main>
+  );
+};

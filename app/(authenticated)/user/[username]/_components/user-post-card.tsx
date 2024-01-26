@@ -57,7 +57,7 @@ export const UserPostCard = ({ post }: UserPostCardProps) => {
 export const UserPostCardSkeleton = () => {
   return (
     <div className="w-[300px] h-[300px] sm:w-[350px] sm:h-[350px]">
-      <Skeleton className="w-full bg-gray-500" />
+      <Skeleton className="w-full h-full rounded bg-gray-500" />
     </div>
   );
 };

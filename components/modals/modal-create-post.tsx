@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { PlusSquare } from "lucide-react";
@@ -37,6 +37,7 @@ export type FilePreviewType = {
   previewUrl: string;
 };
 export function CreatePostModal() {
+  const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FilePreviewType[]>([]);
   const { theme } = useTheme();
 
@@ -67,9 +68,8 @@ export function CreatePostModal() {
     },
   });
 
-  const dialogRef = useRef<HTMLButtonElement | null>(null);
   const closeDialog = () => {
-    dialogRef.current?.click();
+    setOpen(false);
   };
   const handleUpload = (values: z.infer<typeof formUploadSchema>) => {
     if (!files || files.length === 0) {
@@ -89,18 +89,17 @@ export function CreatePostModal() {
     startTransition(() => {
       onCreatePost(formData)
         .then((res) => {
-          closeDialog();
           toast.success(`Post ${res.title} succesfully added.`);
+          closeDialog();
         })
-        .catch((error) => toast.error(error.message))
-        .finally(() => closeDialog());
+        .catch((error) => toast.error(error.message));
     });
   };
   const dialogContentStyle =
-    theme === "light" ? "bg-white" : " bg-customBrown shadow-stone-900";
+    theme === "light" ? "bg-white" : " bg-customBrown ";
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <PlusSquare />
       </DialogTrigger>
@@ -171,7 +170,7 @@ export function CreatePostModal() {
             </div>
 
             <div className="flex justify-between items-center ">
-              <DialogClose ref={dialogRef} asChild>
+              <DialogClose asChild>
                 <Button
                   type="button"
                   className=" hover:bg-gray-300 hover:text-black transition rounded shadow-3xl"

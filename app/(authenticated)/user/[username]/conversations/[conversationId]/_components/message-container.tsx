@@ -27,7 +27,7 @@ export const MessageContainer = ({ message }: MessageContainerProps) => {
   return (
     <div className={container}>
       <div className={avatar}>
-        <UserAvatar avatar={message.sender.avatar} />
+        <UserAvatar initialUser={message.sender} />
       </div>
       <div className={info}>
         <div className="flex items-center  gap-1">

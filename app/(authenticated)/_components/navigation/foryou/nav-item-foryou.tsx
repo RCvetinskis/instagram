@@ -1,4 +1,6 @@
+"use client";
 import { UserLabel, UserLabelSkeleton } from "@/components/user/user-label";
+import userUserOnlineStatuts from "@/hooks/useUserOnlineStatus";
 import { User } from "@prisma/client";
 
 interface NavItemForYouProps {
@@ -6,10 +8,11 @@ interface NavItemForYouProps {
   user: User;
 }
 
-export const NavItemForyou = async ({ href, user }: NavItemForYouProps) => {
+export const NavItemForyou = ({ href, user }: NavItemForYouProps) => {
+  const updatedUser = userUserOnlineStatuts(user);
   return (
     <li className="p-3 w-full hover:shadow-2xl rounded ">
-      <UserLabel user={user} href={href} side="bottom" align="center" />
+      <UserLabel user={updatedUser} href={href} side="bottom" align="center" />
     </li>
   );
 };

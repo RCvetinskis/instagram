@@ -14,11 +14,8 @@ const ConversationsLayout = async ({
 }: ConversationsLayoutProps) => {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) {
-    redirect("/");
-  }
   // prevents to check other users conversations
-  if (currentUser.username !== params.username) {
+  if (currentUser?.username !== params.username) {
     redirect(`/user/${currentUser?.username}/conversations`);
   }
 

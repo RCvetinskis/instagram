@@ -17,6 +17,7 @@ model User {
   externalUserId String         @unique
   email          String?        @unique
   avatar         String?
+  online         Boolean       @default(false)
 
   posts          Post[]
   comments       Comment[]

@@ -138,7 +138,7 @@ export const ModalStartChat = ({ children }: ModalStartChatProps) => {
                 key={user.id}
                 className="flex items-center gap-2 p-2 rounded cursor-pointer my-1  bg-sky-700"
               >
-                <UserAvatar avatar={user.avatar} />
+                <UserAvatar initialUser={user} />
                 <p>{user.username}</p>
                 <XCircle
                   className="cursor-pointer hover:text-gray-500  ml-auto transition-all"
@@ -159,7 +159,7 @@ export const ModalStartChat = ({ children }: ModalStartChatProps) => {
                 key={user.id}
                 onClick={() => selectUser(user)}
               >
-                <UserAvatar avatar={user.avatar} />
+                <UserAvatar initialUser={user} />
                 <p>{user.username}</p>
               </div>
             ))

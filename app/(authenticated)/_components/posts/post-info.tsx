@@ -15,6 +15,8 @@ import { PostComments } from "./comments/post-comments";
 import { useEffect, useState } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
+import useIsAuthor from "@/hooks/useIsAuthor";
+import { ModalDeletePost } from "@/components/modals/modal-delete-post";
 
 interface PostInfoProps {
   post: UserCommentsExtentedPost;
@@ -43,22 +45,27 @@ export const PostInfo = ({ post }: PostInfoProps) => {
     };
   }, [post.id]);
 
+  const isAuthor = useIsAuthor(post.id);
+
   return (
     <Card className="h-full w-full flex flex-col gap-3 border-none mt-2 ">
-      <CardHeader className="px-3 py-2 shadow-4xl rounded  ">
-        <div className="flex items-center gap-3">
-          <UserLabel
-            user={post.author}
-            href={`/user/${post.author.username}`}
-            side="bottom"
-            align="center"
-          />
-          <CardTitle className="text-md  capitalize">{post.title}</CardTitle>
-        </div>
+      <CardHeader className="px-3 py-2 shadow-4xl rounded flex flex-row justify-between items-center ">
+        <div>
+          <div className="flex items-center gap-3">
+            <UserLabel
+              user={post.author}
+              href={`/user/${post.author.username}`}
+              side="bottom"
+              align="center"
+            />
+            <CardTitle className="text-sm  capitalize">{post.title}</CardTitle>
+          </div>
 
-        <CardDescription className="text-gray-500  overflow-auto max-h-[50px] py-1">
-          {post.description}
-        </CardDescription>
+          <CardDescription className="text-gray-500  overflow-auto max-h-[50px] py-1">
+            {post.description}
+          </CardDescription>
+        </div>
+        {isAuthor && <ModalDeletePost postId={post.id} />}
       </CardHeader>
 
       {/* comments */}
