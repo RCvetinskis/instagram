@@ -1,10 +1,7 @@
-import { setUserOnline } from "@/actions/user-actions";
 import { DesktopSidebar } from "./_components/navigation/desktop-sidebar";
 import { MobileFooter } from "./_components/navigation/mobile-fooder";
-
-const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  await setUserOnline();
-
+// TODO: figure out how to display online and offline users
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-full">
       {/* Left Sidebar */}
