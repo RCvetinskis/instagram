@@ -31,7 +31,7 @@ export const Header = async ({ user, postsLength }: HeaderProps) => {
     <header className="flex items-center justify-center gap-3 md:gap-11 rounded shadow-4xl py-4 shadow-black ">
       <div>
         <UserAvatar
-          initialUser={user}
+          user={user}
           className=" w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[150px] md:h-[150px]  "
         />
       </div>

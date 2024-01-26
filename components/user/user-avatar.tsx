@@ -4,17 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
-import userUserOnlineStatuts from "@/hooks/useUserOnlineStatus";
 import { User } from "@prisma/client";
 
 interface UserAvatarProps {
-  initialUser: User;
+  user: User;
   className?: string;
 }
 
-export const UserAvatar = ({ initialUser, className }: UserAvatarProps) => {
-  const user = userUserOnlineStatuts(initialUser);
-
+export const UserAvatar = ({ user, className }: UserAvatarProps) => {
   return (
     <div className="relative">
       <Avatar className={cn("h-8 w-8", className)}>

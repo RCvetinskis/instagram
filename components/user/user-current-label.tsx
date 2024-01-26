@@ -11,7 +11,7 @@ export const UserCurrentLabel = async () => {
       href={`/user/${currentUser?.username}`}
       className="flex  gap-x-3 p-3 hover:shadow-2xl rounded  "
     >
-      <UserAvatar initialUser={currentUser!} />
+      <UserAvatar user={currentUser!} />
 
       <div className="text-sm capitalize">
         <p>{currentUser?.username}</p>

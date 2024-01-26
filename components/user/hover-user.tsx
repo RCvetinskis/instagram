@@ -85,7 +85,7 @@ export const HoverUser = ({
               className="flex gap-x-3 hover:scale-95 transition-all "
               href={`/user/${user.username}`}
             >
-              <UserAvatar initialUser={user} />
+              <UserAvatar user={user} />
 
               <div className="text-sm capitalize">
                 <p>{user.username}</p>

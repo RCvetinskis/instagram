@@ -2,6 +2,7 @@
 import db from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 import { getCurrentUser } from "@/lib/user-service";
+import { User } from "@clerk/nextjs/server";
 
 export const getUsersQuery = async (value: string) => {
   try {
@@ -53,7 +54,7 @@ export const setUserOnline = async () => {
     const currentUser = await getCurrentUser();
     if (!currentUser) throw new Error("Unauthorized");
 
-    const updatedUser = await db.user.update({
+    await db.user.update({
       where: {
         id: currentUser.id,
       },
@@ -61,23 +62,18 @@ export const setUserOnline = async () => {
         online: true,
       },
     });
-
-    pusherServer.trigger(
-      `users-channel-${currentUser.id}`,
-      "user:status",
-      updatedUser
-    );
   } catch (error) {
     console.error("ERROR_USERS_ACTION, setUserOnline", error);
     throw error;
   }
 };
+
 export const setUserOffline = async () => {
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) throw new Error("Unauthorized");
 
-    const updatedUser = await db.user.update({
+    await db.user.update({
       where: {
         id: currentUser.id,
       },
@@ -85,13 +81,6 @@ export const setUserOffline = async () => {
         online: false,
       },
     });
-    if (!updatedUser) throw new Error("Failed to update online status");
-
-    pusherServer.trigger(
-      `users-channel-${currentUser.id}`,
-      "user:status",
-      updatedUser
-    );
   } catch (error) {
     console.error("ERROR_USERS_ACTION, setUserOffline", error);
     throw error;

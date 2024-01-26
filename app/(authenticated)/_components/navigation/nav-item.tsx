@@ -1,5 +1,7 @@
+"use client";
 import { HoverLabel } from "@/components/hover-label";
 import { Skeleton } from "@/components/ui/skeleton";
+
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 

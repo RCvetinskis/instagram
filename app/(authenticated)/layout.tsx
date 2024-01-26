@@ -4,6 +4,7 @@ import { MobileFooter } from "./_components/navigation/mobile-fooder";
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   await setUserOnline();
+
   return (
     <div className="flex h-full">
       {/* Left Sidebar */}

@@ -71,7 +71,7 @@ export const ConversationPreview = ({
         <div className="flex  items-center gap-2 ">
           <div className="flex flex-wrap  space-x-4 w-[80px]">
             {groupUsers.map((user) => (
-              <UserAvatar key={user.id} initialUser={user} />
+              <UserAvatar key={user.id} user={user} />
             ))}
           </div>
           <div>
@@ -85,7 +85,7 @@ export const ConversationPreview = ({
 
       {!conversation.isGroup && (
         <div className="flex  items-center gap-2 ">
-          <UserAvatar initialUser={otherUser[0]} />
+          <UserAvatar user={otherUser[0]} />
           <div>
             <p className="capitalize">{otherUser[0].username}</p>
             <p className="text-foreground text-gray-500 text-sm truncate">

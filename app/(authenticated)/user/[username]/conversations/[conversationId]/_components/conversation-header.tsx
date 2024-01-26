@@ -50,7 +50,7 @@ export const ConversationHeader = ({
             <div className="flex flex-wrap  space-x-4 w-[80px]">
               {groupUsers.map((user) => (
                 <Link key={user.id} href={`/user/${user.username}`}>
-                  <UserAvatar initialUser={user} />
+                  <UserAvatar user={user} />
                 </Link>
               ))}
             </div>
@@ -65,7 +65,7 @@ export const ConversationHeader = ({
         {!conversation.isGroup && (
           <div className="flex  items-center gap-2 ">
             <Link href={`/user/${otherUser[0].username}`}>
-              <UserAvatar initialUser={otherUser[0]} />
+              <UserAvatar user={otherUser[0]} />
             </Link>
 
             <div>

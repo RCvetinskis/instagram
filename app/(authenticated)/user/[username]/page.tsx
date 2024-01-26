@@ -25,13 +25,3 @@ const UserPage = async ({ params }: { params: UserPageProps }) => {
 };
 
 export default UserPage;
-
-export const UserPageSkeleton = () => {
-  return (
-    <main>
-      <HeaderSkeleton />
-      <Skeleton className="my-5" />
-      <UserPostsSkeleton />
-    </main>
-  );
-};
