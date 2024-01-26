@@ -5,7 +5,7 @@ import {
   ScreenConversations,
 } from "../_components/screens/screen-conversations";
 import { Suspense } from "react";
-import { ConversationPageSkeleton } from "./page";
+import { ConversationPageSkeleton } from "./_components/ConversationpageSkeleton";
 
 type paramsType = { username: string };
 

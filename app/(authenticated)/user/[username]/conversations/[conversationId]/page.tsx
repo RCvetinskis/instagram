@@ -1,14 +1,11 @@
 import { getConversationById } from "@/lib/conversation-service";
 import { getCurrentUser } from "@/lib/user-service";
-import {
-  ConversationHeader,
-  ConversationHeaderSkeleton,
-} from "./_components/conversation-header";
-import { Messages, MessagesSkeleton } from "./_components/messages";
-import { SendMessage, SendMessageSkeleton } from "./_components/send-message";
+import { ConversationHeader } from "./_components/conversation-header";
+import { Messages } from "./_components/messages";
+import { SendMessage } from "./_components/send-message";
 import { getMessages } from "@/lib/message-service";
 import { redirect } from "next/navigation";
-
+import { ConversationPageSkeleton } from "./_components/ConversationpageSkeleton";
 type paramsType = { username: string; conversationId: string };
 
 interface ConversationPageProps {
@@ -49,15 +46,3 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
 };
 
 export default ConversationPage;
-
-export const ConversationPageSkeleton = () => {
-  return (
-    <div className="flex flex-col h-full w-full ">
-      <ConversationHeaderSkeleton />
-      <MessagesSkeleton />
-      <footer className="relative mb-[70px] px-4 md:mb-2 ">
-        <SendMessageSkeleton />{" "}
-      </footer>
-    </div>
-  );
-};
