@@ -87,9 +87,17 @@ export async function POST(req: Request) {
   }
 
   if (eventType === "user.deleted") {
-    await db.user.delete({
+    const deletedUser = await db.user.delete({
       where: {
         externalUserId: payload.data.id,
+      },
+    });
+
+    await db.conversation.deleteMany({
+      where: {
+        userIds: {
+          has: deletedUser.id,
+        },
       },
     });
   }
