@@ -26,7 +26,7 @@ const ConversationLayout = async ({
   }
 
   return (
-    <div className="flex h-screen w-full md:pt-5 ">
+    <div className="flex h-[100dvh] w-full md:pt-5 ">
       <div className="hidden md:block  md:min-w-[300px] lg:w-1/2     shadow-3xl shadow-black rounded ">
         <Suspense fallback={<ScreenConversationSkeleton />}>
           <ScreenConversations />
