@@ -42,7 +42,6 @@ export const onCreatePost = async (formData: FormData) => {
       },
     });
 
-    // TODO: podasct new post to all connected users
     await pusherServer.trigger(currentUser.id, "post:new", newPost);
 
     revalidatePath("/");

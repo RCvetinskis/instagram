@@ -4,7 +4,6 @@ import { getCurrentUser } from "@/lib/user-service";
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
-// TODO: fix follow logic
 export const onFollowUser = async (userId: string) => {
   try {
     const currentUser = await getCurrentUser();
