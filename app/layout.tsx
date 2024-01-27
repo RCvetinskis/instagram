@@ -32,7 +32,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning={true}>
         <body className={font.className} suppressHydrationWarning={true}>
-          <ThemeProvider attribute="class" defaultTheme="system">
+          <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
             <Toaster />
           </ThemeProvider>

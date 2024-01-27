@@ -20,8 +20,8 @@ export const ScreenConversations = async () => {
   }
 
   return (
-    <div className="py-2 h-full overflow-y-auto">
-      <header className="flex justify-between shadow-4xl shadow-neutral-800 px-2 h-14">
+    <div className=" h-full ">
+      <header className="flex justify-between shadow-4xl shadow-neutral-800 px-2 py-4 ">
         <HoverLabel side="bottom" label="Profile">
           <Link
             className="capitalize hover:text-gray-500 hover:border-b border-gray-500 transition-all"
@@ -37,7 +37,7 @@ export const ScreenConversations = async () => {
         </HoverLabel>
       </header>
 
-      <main className="my-4 p-2">
+      <main className="my-4 p-2 ">
         <ConversationsContainer
           currentUsername={currentUser.username}
           initialConversations={conversations}
@@ -49,7 +49,7 @@ export const ScreenConversations = async () => {
 
 export const ScreenConversationSkeleton = () => {
   return (
-    <div className="py-2 h-full overflow-y-auto">
+    <div className=" h-full overflow-y-auto">
       <header className="flex justify-between gap-2 shadow-4xl shadow-neutral-800 px-2 h-14">
         <Skeleton className="bg-gray-500 w-[100px] rounded h-[20px]" />
         <Skeleton className="bg-gray-500 w-[30px] rounded h-[30px]" />

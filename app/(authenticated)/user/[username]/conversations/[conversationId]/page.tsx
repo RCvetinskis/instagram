@@ -24,7 +24,7 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
   }
 
   return (
-    <div className="flex flex-col h-full ">
+    <div className="flex flex-col h-full">
       <ConversationHeader
         conversation={conversation}
         currentUsername={currentUser.username}
@@ -35,7 +35,7 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
         conversationId={params?.conversationId}
       />
 
-      <footer className="relative mb-[70px] px-4 md:mb-2 ">
+      <footer className="relative mb-[70px]  px-4 md:mb-2 ">
         <SendMessage
           conversationId={conversation.id}
           currentUserId={currentUser.id}

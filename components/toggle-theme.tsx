@@ -44,12 +44,6 @@ export function ThemeToggle() {
         >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer transition"
-          onClick={() => setTheme("system")}
-        >
-          System
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -47,7 +47,6 @@ export function ModalSearch() {
   const onClear = () => {
     setInputValue("");
     setUsers([]);
-    localStorage.setItem("recent-users", JSON.stringify([]));
   };
 
   const dialogContentStyle =

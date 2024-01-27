@@ -18,6 +18,7 @@ const config: Config = withUt({
         "2xl": "1900px",
       },
     },
+
     extend: {
       boxShadow: {
         "3xl": "4px 5px 4px 5px  #000",

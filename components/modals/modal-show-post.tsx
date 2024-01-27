@@ -57,7 +57,7 @@ export const ModalShowPost = ({ post, children }: ModalShowPostProps) => {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerContent
-        className={cn("border-none shadow-3xl", dialogContentStyle)}
+        className={cn("border-none shadow-3xl  ", dialogContentStyle)}
       >
         <DrawerClose asChild className="relative">
           <Button
@@ -68,7 +68,7 @@ export const ModalShowPost = ({ post, children }: ModalShowPostProps) => {
           </Button>
         </DrawerClose>
 
-        <div className="h-[85vh]">
+        <div className="h-[90dvh]">
           <PostInfo post={post} />
         </div>
       </DrawerContent>

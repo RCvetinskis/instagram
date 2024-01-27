@@ -1,8 +1,7 @@
 "use server";
 import db from "@/lib/db";
-import { pusherServer } from "@/lib/pusher";
+
 import { getCurrentUser } from "@/lib/user-service";
-import { User } from "@clerk/nextjs/server";
 
 export const getUsersQuery = async (value: string) => {
   try {
@@ -45,44 +44,6 @@ export const getUsersQuery = async (value: string) => {
     return sortedUsers;
   } catch (error) {
     console.log("ERROR_GET_USER_QUERY", error);
-    throw error;
-  }
-};
-
-export const setUserOnline = async () => {
-  try {
-    const currentUser = await getCurrentUser();
-    if (!currentUser) throw new Error("Unauthorized");
-
-    await db.user.update({
-      where: {
-        id: currentUser.id,
-      },
-      data: {
-        online: true,
-      },
-    });
-  } catch (error) {
-    console.error("ERROR_USERS_ACTION, setUserOnline", error);
-    throw error;
-  }
-};
-
-export const setUserOffline = async () => {
-  try {
-    const currentUser = await getCurrentUser();
-    if (!currentUser) throw new Error("Unauthorized");
-
-    await db.user.update({
-      where: {
-        id: currentUser.id,
-      },
-      data: {
-        online: false,
-      },
-    });
-  } catch (error) {
-    console.error("ERROR_USERS_ACTION, setUserOffline", error);
     throw error;
   }
 };

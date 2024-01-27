@@ -5,6 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
 import { User } from "@prisma/client";
+import useActiveList from "@/hooks/useActiveList";
 
 interface UserAvatarProps {
   user: User;
@@ -12,6 +13,9 @@ interface UserAvatarProps {
 }
 
 export const UserAvatar = ({ user, className }: UserAvatarProps) => {
+  const { members } = useActiveList();
+  const isActive = members.indexOf(user?.username!) !== -1;
+
   return (
     <div className="relative">
       <Avatar className={cn("h-8 w-8", className)}>
@@ -21,7 +25,7 @@ export const UserAvatar = ({ user, className }: UserAvatarProps) => {
         <AvatarFallback>User</AvatarFallback>
       </Avatar>
 
-      <Badge variant={user.online ? "online" : "offline"} />
+      <Badge variant={isActive ? "online" : "offline"} />
     </div>
   );
 };

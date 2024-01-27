@@ -48,8 +48,8 @@ export const PostInfo = ({ post }: PostInfoProps) => {
   const isAuthor = useIsAuthor(post.id);
 
   return (
-    <Card className="h-full w-full flex flex-col gap-3 border-none mt-2 ">
-      <CardHeader className="px-3 py-2 shadow-4xl rounded flex flex-row justify-between items-center ">
+    <Card className="h-full w-full flex flex-col  border-none  ">
+      <CardHeader className="px-3  py-2 shadow-4xl rounded flex flex-row justify-between items-center ">
         <div>
           <div className="flex items-center gap-3">
             <UserLabel
@@ -75,7 +75,7 @@ export const PostInfo = ({ post }: PostInfoProps) => {
 
       {/* comment input*/}
 
-      <CardFooter className="px-3 py-2 w-full shadow-3xl rounded">
+      <CardFooter className=" mb-[20px] w-full shadow-3xl rounded">
         <CommentForm postId={post.id} />
       </CardFooter>
     </Card>

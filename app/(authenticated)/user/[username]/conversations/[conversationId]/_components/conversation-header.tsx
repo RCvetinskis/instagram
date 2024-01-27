@@ -31,52 +31,52 @@ export const ConversationHeader = ({
   );
 
   return (
-    <header className="shadow-4xl shadow-neutral-800 min-h-16">
-      {isMobile && (
-        <nav>
-          <Link href={`/user/${currentUsername}/conversations`}>
-            <Button
-              variant={"ghost"}
-              className="hover:text-gray-500 transition"
-            >
-              <ArrowLeft />
-            </Button>
-          </Link>
-        </nav>
-      )}
+    <header className="shadow-4xl shadow-neutral-800 py-1 md:px-2 ">
       <div className="p-2 flex items-center justify-between">
-        {conversation.isGroup && (
-          <div className="flex  items-center gap-2 ">
-            <div className="flex flex-wrap  space-x-4 w-[80px]">
-              {groupUsers.map((user) => (
-                <Link key={user.id} href={`/user/${user.username}`}>
-                  <UserAvatar user={user} />
-                </Link>
-              ))}
-            </div>
-            <div className="mb-3">
-              <p className="capitalize">{conversation.name}</p>
-              <p className="text-foreground text-gray-500 group-hover:text-black text-sm truncate">
-                Active
-              </p>
-            </div>
-          </div>
-        )}
-        {!conversation.isGroup && (
-          <div className="flex  items-center gap-2 ">
-            <Link href={`/user/${otherUser[0].username}`}>
-              <UserAvatar user={otherUser[0]} />
+        <div className="flex items-center gap-3">
+          {isMobile && (
+            <Link href={`/user/${currentUsername}/conversations`}>
+              <Button
+                variant={"ghost"}
+                className="hover:text-gray-500 transition"
+              >
+                <ArrowLeft size={18} />
+              </Button>
             </Link>
+          )}
 
-            <div>
-              <p className="capitalize">{otherUser[0].username}</p>
-              <p className="text-foreground text-gray-500 group-hover:text-black text-sm truncate">
-                Active
-              </p>
+          {conversation.isGroup && (
+            <div className="flex  items-center gap-2 ">
+              <div className="flex flex-wrap  space-x-4 w-[80px]">
+                {groupUsers.map((user) => (
+                  <Link key={user.id} href={`/user/${user.username}`}>
+                    <UserAvatar user={user} />
+                  </Link>
+                ))}
+              </div>
+              <div className="mb-3">
+                <p className="capitalize">{conversation.name}</p>
+                <p className="text-foreground text-gray-500 group-hover:text-black text-sm truncate">
+                  Active
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {!conversation.isGroup && (
+            <div className="flex  items-center gap-2 ">
+              <Link href={`/user/${otherUser[0].username}`}>
+                <UserAvatar user={otherUser[0]} />
+              </Link>
 
+              <div>
+                <p className="capitalize">{otherUser[0].username}</p>
+                <p className="text-foreground text-gray-500 group-hover:text-black text-sm truncate">
+                  Active
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
         <ModalConversationSettings
           conversation={conversation}
           otherUser={otherUser[0]}

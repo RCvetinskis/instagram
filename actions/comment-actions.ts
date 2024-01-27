@@ -41,11 +41,17 @@ export const onCreateComment = async (postId: string, comment: string) => {
         },
       },
       include: {
-        comments: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
-
-    await pusherServer.trigger(postId, "comments:new", newComment);
+    const commentUpdated = updatedPost.comments.filter(
+      (comment) => comment.id === newComment.id
+    );
+    await pusherServer.trigger(postId, "comments:new", commentUpdated[0]);
 
     if (!updatedPost) throw new Error("Post not updated");
 
@@ -55,6 +61,7 @@ export const onCreateComment = async (postId: string, comment: string) => {
       updatedPost.comments.length
     );
     revalidatePath("/");
+    revalidatePath("/explore");
     revalidatePath(`/user/${currentUser.username}`);
     return newComment;
   } catch (error) {

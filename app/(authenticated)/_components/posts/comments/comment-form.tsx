@@ -40,27 +40,29 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full grid grid-cols-[4fr,0fr] gap-3 items-center my-2"
+        className="w-full  flex gap-1 items-center my-2"
       >
-        <FormField
-          control={form.control}
-          name="comment"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Textarea
-                  disabled={isPending}
-                  placeholder="Add a comment..."
-                  className={cn(
-                    "resize-none min-h-0 shadow-4xl   border-none outline-none rounded",
-                    theme !== "light" && " shadow-gray-500"
-                  )}
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <div className="flex-1">
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Textarea
+                    disabled={isPending}
+                    placeholder="Add a comment..."
+                    className={cn(
+                      "resize-none min-h-0 shadow-4xl   border-none outline-none rounded",
+                      theme !== "light" && " shadow-gray-500"
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
         <Button disabled={isPending} type="submit" variant={"ghost"}>
           <SendHorizonal />
         </Button>

@@ -41,7 +41,6 @@ export const ConversationsContainer = ({
       setConversations((current) =>
         current.map((currentConversation) => {
           if (currentConversation.id === conversation.id) {
-            console.log(conversation.messages);
             return {
               ...currentConversation,
               messages: conversation.messages,

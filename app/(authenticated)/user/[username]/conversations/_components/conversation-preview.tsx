@@ -61,7 +61,7 @@ export const ConversationPreview = ({
     <div
       onClick={handleClick}
       className={cn(
-        "my-4 p-2  rounded-xl shadow-4xl group  cursor-pointer ",
+        "my-4 p-2  rounded-xl shadow-4xl group over  cursor-pointer ",
         !themeLight && "shadow-gray-700",
         hoverStyle,
         selectedStyle
