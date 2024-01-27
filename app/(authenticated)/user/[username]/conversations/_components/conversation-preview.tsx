@@ -18,6 +18,7 @@ export const ConversationPreview = ({
 }: ConversationPreviewProps) => {
   const router = useRouter();
   const { conversationId } = useConversation();
+  const { theme } = useTheme();
 
   const otherUser = useMemo(
     () =>
@@ -45,8 +46,6 @@ export const ConversationPreview = ({
     router.push(`/user/${currentUsername}/conversations/${conversation.id}`);
   }, [conversation.id, router]);
 
-  const { theme } = useTheme();
-
   const themeLight = theme === "light";
 
   const selectedStyle =
@@ -60,8 +59,9 @@ export const ConversationPreview = ({
   return (
     <div
       onClick={handleClick}
+      suppressHydrationWarning
       className={cn(
-        "my-4 p-2  rounded-xl shadow-4xl group over  cursor-pointer ",
+        "my-4 p-2  rounded-xl shadow-4xl   cursor-pointer ",
         !themeLight && "shadow-gray-700",
         hoverStyle,
         selectedStyle
@@ -100,7 +100,7 @@ export const ConversationPreview = ({
 
 export const ConversationPreviewSkeleton = () => {
   return (
-    <div className="my-4 p-2  rounded-xl  shadow-4xl  ">
+    <div className="my-4 p-2  rounded-xl  shadow-4xl shadow-gray-700  ">
       <div className="flex  items-center gap-2 ">
         <UserAvatarSkeleton />
 

@@ -24,6 +24,13 @@ export const MessageContainer = ({ message }: MessageContainerProps) => {
     isOwn ? "bg-sky-700 text-white" : "bg-neutral-800 text-white",
     message.file ? "rounded p-0" : "rounded-full py-2 px-3"
   );
+
+  const isImage =
+    message?.file &&
+    (message.file.includes(".png") ||
+      message.file.includes(".jpg") ||
+      message.file.includes(".jpeg"));
+  const isVideo = message?.file && message.file.includes(".mp4");
   return (
     <div className={container}>
       <div className={avatar}>
@@ -38,11 +45,20 @@ export const MessageContainer = ({ message }: MessageContainerProps) => {
         </div>
 
         <div className={messageClass}>
-          {message.file && (
+          {message.file && isImage && (
             <Image
               alt="Image"
               height={288}
               width={288}
+              src={message.file}
+              className="object-cover "
+            />
+          )}
+          {message.file && isVideo && (
+            <video
+              height={288}
+              width={288}
+              controls
               src={message.file}
               className="object-cover "
             />

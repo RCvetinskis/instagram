@@ -12,7 +12,7 @@ export const getUsersQuery = async (value: string) => {
     const users = await db.user.findMany({
       where: {
         username: {
-          contains: value,
+          contains: value.toLowerCase(),
           not: currentUser.username,
         },
       },

@@ -35,7 +35,7 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
         conversationId={params?.conversationId}
       />
 
-      <footer className="relative mb-[70px]  px-4 md:mb-2 ">
+      <footer className="relative pb-[70px]  px-4 md:pb-2 ">
         <SendMessage
           conversationId={conversation.id}
           currentUserId={currentUser.id}

@@ -11,6 +11,7 @@ export const SignOut = () => {
   const router = useRouter();
   const handleClick = async () => {
     startTransition(() => {
+      localStorage.removeItem("recent-users");
       signOut().then(() => router.push("/sign-in"));
     });
   };

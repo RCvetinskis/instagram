@@ -7,7 +7,7 @@ import { ScreenStartChat } from "./_components/screens/screen-start-chat";
 
 const ConversationsPage = () => {
   return (
-    <div className="flex h-screen w-full pt-5 gap-1">
+    <div className="flex h-screen w-full md:pt-5 gap-1">
       <div className="flex-grow  md:min-w-[300px] lg:w-1/2  shadow-3xl shadow-black rounded ">
         <Suspense fallback={<ScreenConversationSkeleton />}>
           <ScreenConversations />

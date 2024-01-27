@@ -7,7 +7,7 @@ export const ConversationPageSkeleton = () => {
     <div className="flex flex-col h-full w-full ">
       <ConversationHeaderSkeleton />
       <MessagesSkeleton />
-      <footer className="relative mb-[70px] px-4 md:mb-2 ">
+      <footer className="relative pb-[70px] px-4 md:pb-2 ">
         <SendMessageSkeleton />{" "}
       </footer>
     </div>
