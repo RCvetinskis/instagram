@@ -5,7 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
 import { User } from "@prisma/client";
-import useActiveList from "@/hooks/useActiveList";
+import { useActiveList } from "@/store/store-active-list";
 
 interface UserAvatarProps {
   user: User;

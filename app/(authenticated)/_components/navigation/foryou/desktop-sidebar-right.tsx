@@ -12,6 +12,7 @@ export const DesktopRightSidebar = async () => {
   const suggestedUsers = await getSuggestedUsers();
   const currentUser = await getCurrentUser();
 
+  console.log(suggestedUsers);
   const routes = suggestedUsers?.map((user) => ({
     href: `/user/${user.username}`,
     user,

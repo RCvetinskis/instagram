@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { Spinner } from "../../../../components/loading/spinner";
+
 import { getExplorePosts, getPostsFollowing } from "@/actions/posts-actions";
-import { Posts } from "@/app/(authenticated)/_components/posts/posts";
+
 import { UserCommentsExtentedPost } from "@/types";
 
-interface LoadMoreProps {
-  variant: "home" | "explore";
-}
-export const LoadMore = ({ variant }: LoadMoreProps) => {
-  const [data, setData] = useState<UserCommentsExtentedPost[]>([]);
+const useLoadMorePosts = (
+  variant: string,
+  initialPosts: UserCommentsExtentedPost[]
+) => {
+  const [data, setData] = useState(initialPosts);
   const [pagesLoaded, setPagesLoaded] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true);
   const { ref, inView } = useInView();
@@ -27,29 +27,19 @@ export const LoadMore = ({ variant }: LoadMoreProps) => {
     if (newData.length === 0) {
       setHasMoreData(false);
     } else {
-      setData((prevData: UserCommentsExtentedPost[]) => [
-        ...prevData,
-        ...newData,
-      ]);
+      setData((prevData) => [...prevData, ...newData]);
     }
 
     setPagesLoaded(nextPage);
   };
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasMoreData) {
       loadMoreData();
     }
-  }, [inView]);
+  }, [inView, hasMoreData]);
 
-  return (
-    <>
-      <Posts initialPosts={data} noPostsText="" />
-      {hasMoreData && (
-        <div ref={ref} className="flex justify-center items-center p-1 w-full">
-          <Spinner />
-        </div>
-      )}
-    </>
-  );
+  return { data, setData, hasMoreData, ref };
 };
+
+export default useLoadMorePosts;
