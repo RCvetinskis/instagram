@@ -10,13 +10,13 @@ export const MobileFooter = () => {
   const [isMounted, setIsMounted] = useState(false);
   const routes = useRoutes();
   const { theme } = useTheme();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted || !user) {
+  if (!isMounted || !user || !isLoaded) {
     return (
       <footer className="fixed justify-between w-full bottom-0 z-40 flex items-center p-1 md:hidden bg-[#121212]  ">
         {[...Array(7)].map((_, i) => (

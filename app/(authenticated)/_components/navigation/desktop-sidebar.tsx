@@ -10,13 +10,13 @@ import { useUser } from "@clerk/nextjs";
 export const DesktopSidebar = () => {
   const [isMounted, setIsMounted] = useState(false);
   const routes = useRoutes();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted || !user) {
+  if (!isMounted || !user || !isLoaded) {
     return (
       <aside className="h-full py-8 md:px-2 lg:px-0 shadow-3xl shadow-black">
         <ul className="flex flex-col items-center justify-between h-full">

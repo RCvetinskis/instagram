@@ -17,7 +17,7 @@ export const DesktopRightSidebar = async () => {
     user,
   }));
 
-  if (!routes || !currentUser) {
+  if (!routes || !currentUser || !currentUser.id) {
     return null;
   }
 
