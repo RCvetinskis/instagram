@@ -22,11 +22,9 @@ export const getCurrentUser = async () => {
 export const getSuggestedUsers = async () => {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) throw new Error("Unauthorized");
-
   const followingUsers = await db.follow.findMany({
     where: {
-      followerId: currentUser.id,
+      followerId: currentUser?.id,
     },
   });
 
@@ -51,7 +49,7 @@ export const getSuggestedUsers = async () => {
   });
 
   revalidatePath("/");
-  revalidatePath(`/user/${currentUser.username}`);
+  revalidatePath(`/user/${currentUser?.username}`);
   return suggestedUsers;
 };
 

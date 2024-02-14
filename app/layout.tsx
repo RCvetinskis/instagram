@@ -23,10 +23,6 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-      signUpUrl="/sign-up"
-      signInUrl="/sign-in"
-      afterSignInUrl="/"
-      afterSignUpUrl="/"
       appearance={{
         baseTheme: neobrutalism,
         variables: { colorPrimary: "blue", spacingUnit: "0.8rem" },

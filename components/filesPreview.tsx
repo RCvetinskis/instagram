@@ -50,10 +50,11 @@ export function FilesPreview({ files, onClear }: FilesPreviewProps) {
                           />
                         </div>
                       ) : isImage ? (
-                        <div className="w-full h-full relative">
+                        <div className="relative">
                           <Image
                             alt="Post Image"
-                            fill
+                            width={400}
+                            height={600}
                             className="rounded-xl"
                             src={file.previewUrl}
                           />

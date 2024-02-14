@@ -60,10 +60,11 @@ export function Slider({ files, prevArrow, nextArrow }: SliderProps) {
                         />
                       </div>
                     ) : isImage ? (
-                      <div className="w-full h-full relative">
+                      <div className=" relative">
                         <Image
                           alt="Post Image"
-                          fill
+                          width={600}
+                          height={600}
                           className="rounded"
                           loading="lazy"
                           src={file}
